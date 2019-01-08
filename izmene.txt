@@ -1,0 +1,13 @@
+
+izmene 07-Avg-2017
+
+baza:
+- tab Fakture, polje BrojFI -> 25char
+- tab faktureStavke, dodato polje CheckBoxCenaSaPDV, default 0, not null
+- view ListaFakturaView, dodata kolona BrojFI
+
+
+
+ui:
+- forma Faktura, dodato polje BrojFI - maks length 25char
+- fakturaPrint, dodato polje BrojFI

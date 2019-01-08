@@ -1,0 +1,141 @@
+﻿
+Function slovima(broj)
+
+If broj = 0 Then
+  slovima = "nula"
+  Exit Function
+End If
+
+ReDim imebr(9)
+imebr(1) = "jedan"
+imebr(2) = "dva"
+imebr(3) = "tri"
+'imebr(4) = "četiri"
+imebr(4) = StrConv("četiri", vbUnicode)
+
+imebr(5) = "pet"
+imebr(6) = "šest"
+imebr(7) = "sedam"
+imebr(8) = "osam"
+imebr(9) = "devet"
+
+rez = ""
+celi = Int(broj)
+dec = ((broj - celi) * 100) Mod 100
+cbr = Str(celi)
+duzina = 16 - Len(cbr)
+cbroj = String(duzina, "0") & Right(cbr, Len(cbr) - 1)
+
+i = 1
+
+
+
+Do While i < 15
+ tric = Mid(cbroj, i, 3)
+ trojka = Val(tric)
+
+ If tric <> "000" Then
+   cs = Val(Mid(tric, 1, 1))
+   cd = Val(Mid(tric, 2, 1))
+   cj = Val(Mid(tric, 3, 1))
+   Select Case cs
+     Case 2
+       rez = rez & "dve"
+     Case Is > 2
+       rez = rez & imebr(cs)
+   End Select
+
+   Select Case cs
+     Case 1
+       rez = rez & "stotinu"
+     Case 2, 3, 4
+       rez = rez & "stotine"
+     Case Is > 4
+       rez = rez & "stotina"
+   End Select
+
+   If cj = 0 Then sl1 = "" Else sl1 = imebr(cj)
+
+   Select Case cd
+     Case 4
+       'rez = rez & "eetr"
+       rez = rez & StrConv("četr", vbUnicode)
+     Case 6
+       rez = rez & "šez"
+     Case 5
+       rez = rez & "pe"
+     Case 9
+       rez = rez & "deve"
+     Case 2, 3, 7, 8
+       rez = rez & imebr(cd)
+     Case 1
+       sl1 = ""
+       Select Case cj
+         Case 0
+           rez = rez & "deset"
+         Case 1
+           rez = rez & "jeda"
+         Case 4
+           'rez = rez & "četr"
+           rez = rez & StrConv("četr", vbUnicode)
+         Case Else
+           rez = rez & imebr(cj)
+       End Select
+
+       If cj > 0 Then rez = rez & "naest"
+    End Select
+
+   If cd > 1 Then rez = rez & "deset"
+
+   If (i = 4 Or i = 10) And cd <> 1 Then
+     If cj = 1 Then
+       sl1 = "jedna"
+     ElseIf cj = 2 Then
+       sl1 = "dve"
+     End If
+   End If
+
+   rez = rez & sl1
+
+    Select Case i
+     Case 1
+       rez = rez & "bilion"
+       If cj > 1 Or cd = 1 Then rez = rez & "a"
+     Case 4
+       rez = rez & "milijard"
+       If ((trojka Mod 100) > 11 And _
+          (trojka Mod 100) < 19) Then
+         rez = rez & "i"
+       ElseIf cj = 1 Then
+         rez = rez & "a"
+       ElseIf cj > 4 Or cj = 0 Then
+         rez = rez & "i"
+       ElseIf cj > 1 Then
+         rez = rez & "e"
+       End If
+     Case 7
+       rez = rez & "milion"
+       If ((trojka Mod 100) > 11 And _
+          (trojka Mod 100) < 19) Or cj <> 1 Then
+         rez = rez & "a"
+       End If
+     Case 10
+       rez = rez & "hiljad"
+       If ((trojka Mod 100) > 11 And _
+          (trojka Mod 100) < 19) Or cj = 1 Then
+         rez = rez & "a"
+       ElseIf trojka = 1 Then
+         rez = rez & "u"
+       ElseIf cj > 4 Or cj = 0 Then
+         rez = rez & "a"
+       ElseIf cj > 1 Then
+         rez = rez & "e"
+       End If
+   End Select
+ End If
+ i = i + 3
+Loop
+
+slovima = rez & " RSD " & Str(dec) & "/100"
+
+End Function
